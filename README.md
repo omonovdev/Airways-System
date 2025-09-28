@@ -1,63 +1,72 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Airways System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Professional backend for an airways ticketing and management system. Built with NestJS, TypeORM, PostgreSQL, and TypeScript.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
+- Flight search and booking (with seat/class selection, round-trip, cancellation)
+- User, Admin, Super-Admin roles (JWT authentication, guards)
+- Admin panel: manage flights, tickets, reviews, news, users
+- Reviews: rating and comment for flights
+- Loyalty program: points, levels, referral system
+- News: CRUD for admin announcements
+- Payment system: booking payments, integration-ready
+- Notifications: user and admin messages
+- Full ER diagram and DrawSQL
+- Swagger/Postman documentation
+- Clean code, validation, error handling
 
-## Description
+## Technologies
+- NestJS
+- TypeORM
+- PostgreSQL
+- TypeScript
+- Swagger/Postman
+- Docker (for deployment)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting Started
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/omonovdev/Airways-System.git
+   cd Airways-System
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure environment variables in `.env` (see `.env.example`).
+4. Run migrations and start the server:
+   ```bash
+   npm run start:dev
+   ```
+5. Access API docs at `/api` (Swagger/Postman).
 
-## Project setup
+## Project Structure
+- `src/` — all modules (users, admin, booking, flights, payment, news, reviews, loyalty, etc.)
+- `src/entities/` — TypeORM entities
+- `src/dto/` — DTOs with validation
+- `src/controllers/` — REST API endpoints
+- `src/services/` — business logic
+- `src/utils/` — helpers, error handling
 
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+## ER Diagram
+See `docs/DrawSQL.png` for full database structure.
 
 ## Deployment
+- Dockerfile and Railway/Heroku ready
+- CI/CD pipeline via GitHub Actions
+- Domain: airways.ism-fam.uz
+
+## Bonus Features
+- Microservice architecture (NestJS microservices)
+- Redis caching
+- Payment integration (Stripe, Payme, Click)
+- Frontend UI (React/Next.js)
+
+## Author
+Ahrorbek Omonov
+
+## License
+MIT
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
