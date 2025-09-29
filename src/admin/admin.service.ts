@@ -12,6 +12,7 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 import { handleError } from '../utils/hande-error';
 import { resSuccess } from '../utils/succes-response';
 import { validateUUID } from '../utils/validate-uuid';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AdminService implements OnModuleInit {
@@ -25,7 +26,6 @@ export class AdminService implements OnModuleInit {
     if (!email || !password) return;
     const existingAdmin = await this.adminRepository.findOne({ where: { email } });
     if (!existingAdmin) {
-      const bcrypt = require('bcrypt');
       const hashedPassword = await bcrypt.hash(password, 10);
       const admin = this.adminRepository.create({
         name: 'Super Admin',
@@ -33,6 +33,25 @@ export class AdminService implements OnModuleInit {
         password: hashedPassword,
       });
       await this.adminRepository.save(admin);
+      return;
+    }
+
+    const passwordLooksHashed = existingAdmin.password?.startsWith('$2');
+    let passwordMatches = false;
+    if (passwordLooksHashed) {
+      try {
+        passwordMatches = await bcrypt.compare(password, existingAdmin.password);
+      } catch (error) {
+        passwordMatches = false;
+      }
+    }
+
+    if (!passwordLooksHashed || !passwordMatches) {
+      existingAdmin.password = await bcrypt.hash(password, 10);
+      if (!existingAdmin.name) {
+        existingAdmin.name = 'Super Admin';
+      }
+      await this.adminRepository.save(existingAdmin);
     }
   }
   constructor(
@@ -48,8 +67,6 @@ export class AdminService implements OnModuleInit {
       });
       if (existing)
         throw new BadRequestException('Admin with this email already exists');
-
-      const bcrypt = require('bcrypt');
       const hashedPassword = await bcrypt.hash(createAdminDto.password, 10);
       const admin = this.adminRepository.create({
         name: createAdminDto.name,
@@ -94,7 +111,11 @@ export class AdminService implements OnModuleInit {
       validateUUID(id, 'Admin ID');
       const admin = await this.adminRepository.findOne({ where: { id } });
       if (!admin) throw new NotFoundException('Admin not found');
-      Object.assign(admin, updateAdminDto);
+      const { password: newPassword, ...rest } = updateAdminDto as UpdateAdminDto & { password?: string };
+      if (newPassword) {
+        admin.password = await bcrypt.hash(newPassword, 10);
+      }
+      Object.assign(admin, rest);
       await this.adminRepository.save(admin);
       const updatedAdmin = await this.adminRepository.findOne({
         where: { id },
@@ -130,3 +151,14 @@ export class AdminService implements OnModuleInit {
   return null; // or handle as needed
   }
 }
+
+
+
+
+
+
+
+
+
+
+

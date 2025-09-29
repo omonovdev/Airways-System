@@ -12,9 +12,10 @@ import { BookingService } from './booking.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminOnlyGuard } from '../auth/guards/admin-only.guard';
 
 @Controller('booking')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, AdminOnlyGuard)
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 

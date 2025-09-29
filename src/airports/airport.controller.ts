@@ -6,12 +6,16 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AirportService } from './airport.service';
 import { CreateAirportDto } from './dto/create-airport.dto';
 import { UpdateAirportDto } from './dto/update-airport.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminOnlyGuard } from '../auth/guards/admin-only.guard';
 
 @Controller('airports')
+@UseGuards(JwtAuthGuard, AdminOnlyGuard)
 export class AirportController {
   constructor(private readonly airportService: AirportService) {}
 

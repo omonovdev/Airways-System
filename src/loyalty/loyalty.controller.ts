@@ -12,9 +12,10 @@ import { LoyaltyService } from './loyalty.service';
 import { CreateLoyaltyDto } from './dto/create-loyalty.dto';
 import { UpdateLoyaltyDto } from './dto/update-loyalty.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminOnlyGuard } from '../auth/guards/admin-only.guard';
 
 @Controller('loyalty')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, AdminOnlyGuard)
 export class LoyaltyController {
   constructor(private readonly loyaltyService: LoyaltyService) {}
 

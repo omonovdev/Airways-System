@@ -12,9 +12,10 @@ import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminOnlyGuard } from '../auth/guards/admin-only.guard';
 
 @Controller('reviews')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, AdminOnlyGuard)
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 

@@ -12,9 +12,10 @@ import { PlaneService } from './plane.service';
 import { CreatePlaneDto } from './dto/create-plane.dto';
 import { UpdatePlaneDto } from './dto/update-plane.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminOnlyGuard } from '../auth/guards/admin-only.guard';
 
 @Controller('planes')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, AdminOnlyGuard)
 export class PlaneController {
   constructor(private readonly planeService: PlaneService) {}
 

@@ -13,7 +13,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    // JWT dan faqat userId va email qaytariladi, role endi yo'q
-    return { userId: payload.sub, email: payload.email };
+    const { sub, email, isAdmin, role } = payload;
+    const superAdminEmail = process.env.SUPER_ADMIN_EMAIL;
+    const isAdminFlag = Boolean(isAdmin) || role === 'admin' || role === 'super-admin' || (superAdminEmail && email === superAdminEmail);
+    return { sub, email, isAdmin: isAdminFlag, role };
   }
 }

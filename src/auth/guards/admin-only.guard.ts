@@ -16,7 +16,9 @@ export class AdminOnlyGuard implements CanActivate {
     if (!user) {
       throw new UnauthorizedException('No user found in request');
     }
-    // Token payloaddan email SUPER_ADMIN_EMAIL bo‘lsa yoki email adminlar ro‘yxatida bo‘lsa, ruxsat beriladi
+    if (user.isAdmin) {
+      return true;
+    }
     if (user.email === process.env.SUPER_ADMIN_EMAIL) {
       return true;
     }

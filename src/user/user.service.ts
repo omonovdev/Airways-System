@@ -107,8 +107,23 @@ export class UserService implements OnModuleInit {
     }
   }
 
+  // Oddiy user uchun faqat o'zini ko'rsatish
+  async findSelf(userId: string): Promise<object> {
+    try {
+      const user = await this.userRepository.findOne({ where: { id: userId } });
+      if (!user) throw new NotFoundException('User not found');
+      return resSuccess({ data: user });
+    } catch (error) {
+      handleError(error);
+      return resSuccess({ message: 'User not found', data: null });
+    }
+  }
+
   async findOne(id: string): Promise<object> {
     try {
+      if (!id) {
+        throw new BadRequestException('User ID is required');
+      }
       validateUUID(id, 'User ID');
       const user = await this.userRepository.findOne({ where: { id } });
       if (!user) throw new NotFoundException('User not found');
@@ -152,3 +167,4 @@ export class UserService implements OnModuleInit {
     }
   }
 }
+
