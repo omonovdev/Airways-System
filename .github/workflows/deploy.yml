@@ -24,9 +24,9 @@ jobs:
 
       - name: Create .env file
         env:
-          ENV_FILE: `${{ secrets.ENV_FILE }}`
+          ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          printf '%s' `"$ENV_FILE`" > .env
+          printf '%s' "$ENV_FILE" > .env
 
 
       - name: Run tests
