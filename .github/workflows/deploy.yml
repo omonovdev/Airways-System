@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Ensure target directory exists
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            mkdir -p ${{ secrets.APP_DIR }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -29,7 +37,7 @@ jobs:
           printf '%s' "$ENV_FILE" > .env
 
 
-          
+
       - name: Build project
         run: npm run build
 
