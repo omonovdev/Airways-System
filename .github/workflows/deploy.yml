@@ -22,6 +22,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create .env file
+        env:
+          ENV_FILE: `${{ secrets.ENV_FILE }}`
+        run: |
+          printf '%s' `"$ENV_FILE`" > .env
+
+
       - name: Run tests
         run: npm run test --if-present -- --watch=false
 
@@ -30,7 +37,7 @@ jobs:
 
       - name: Package artifacts
         run: |
-          tar -czf release.tar.gz dist package.json package-lock.json ecosystem.config.js
+          tar -czf release.tar.gz dist package.json package-lock.json ecosystem.config.js .env
 
       - name: Upload artifacts to server
         uses: appleboy/scp-action@v0.1.7
